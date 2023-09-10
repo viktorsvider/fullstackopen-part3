@@ -24,6 +24,20 @@ let persons = [
   },
 ];
 
+const buildString = (numberTotal, stringTemplate) => {
+  return numberTotal == 1
+    ? `${stringTemplate} 1 person`
+    : `${stringTemplate} ${numberTotal} people`;
+};
+
+app.get("/api/info", (request, response) => {
+  const stringTemplate = "Phonebook has info about";
+  const infoString = buildString(persons.length, stringTemplate);
+  const currentDateTime = new Date().toString();
+  const payload = `<p>${infoString}</p> <p>${currentDateTime}</p>`;
+  response.send(payload);
+});
+
 app.get("/api/persons", (request, response) => {
   response.json(persons);
 });
