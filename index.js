@@ -30,6 +30,15 @@ const buildString = (numberTotal, stringTemplate) => {
     : `${stringTemplate} ${numberTotal} people`;
 };
 
+app.get("/api/persons/:id", (request, response) => {
+  const id = request.params.id;
+  // Maybe wrap with try...catch???
+  if (persons[id] === undefined) {
+    response.status(404).send("Bad id");
+  }
+  response.send(JSON.stringify(persons[id]));
+});
+
 app.get("/api/info", (request, response) => {
   const stringTemplate = "Phonebook has info about";
   const infoString = buildString(persons.length, stringTemplate);
