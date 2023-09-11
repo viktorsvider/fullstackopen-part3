@@ -35,14 +35,18 @@ app.post("/api/persons", (request, response) => {
   const newPerson = {};
   const name = request.body.name;
   const number = request.body.number;
+
   if (name === undefined || number === undefined) {
     response.status(400).send({ error: "no name or number" });
+  } else if (persons.find((person) => person.name === name) !== undefined) {
+    response.status(400).send({ error: "name must be unique" });
+  } else {
+    newPerson.id = Math.round(Math.random() * 100000);
+    newPerson.name = name;
+    newPerson.number = number;
+    persons.push(newPerson);
+    response.json(newPerson);
   }
-  newPerson.id = Math.round(Math.random() * 100000);
-  newPerson.name = name;
-  newPerson.number = number;
-  persons.push(newPerson);
-  response.json(newPerson);
 });
 
 app.delete("/api/persons/:id", (request, response) => {
