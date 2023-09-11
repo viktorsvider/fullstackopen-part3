@@ -30,6 +30,16 @@ const buildString = (numberTotal, stringTemplate) => {
     : `${stringTemplate} ${numberTotal} people`;
 };
 
+app.delete("/api/persons/:id", (request, response) => {
+  const id = Number(request.params.id);
+  const elementWithId = persons.find((person) => person.id === id);
+  if (elementWithId === undefined) {
+    response.status(404).end();
+  }
+  persons = persons.filter((persons) => persons.id !== id);
+  response.status(204).end();
+});
+
 app.get("/api/persons/:id", (request, response) => {
   const id = request.params.id;
   // Maybe wrap with try...catch???

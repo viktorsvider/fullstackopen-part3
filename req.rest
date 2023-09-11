@@ -1,0 +1,36 @@
+### GET all
+GET http://localhost:3001/api/persons 
+
+### GET single
+GET http://localhost:3001/api/persons/1
+
+### GET single 2
+GET http://localhost:3001/api/persons/2
+
+### GET non-existent single (should return 404)
+GET http://localhost:3001/api/persons/222
+
+### GET info
+GET http://localhost:3001/api/info
+
+### POST single
+POST http://localhost:3001/api/persons 
+content-type: application/json 
+
+{
+    "number":098883223,
+    "name":"Michael"
+}
+
+### POST single no data (should return 400)
+POST http://localhost:3001/api/persons 
+content-type: application/json 
+
+{
+}
+
+### DELETE existent (should return 204)
+DELETE http://localhost:3001/api/persons/2
+
+### DELETE non-existent (should return 404)
+DELETE http://localhost:3001/api/persons/999
