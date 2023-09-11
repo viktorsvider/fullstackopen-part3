@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+app.use(express.json());
 
 let persons = [
   {
@@ -30,6 +31,20 @@ const buildString = (numberTotal, stringTemplate) => {
     : `${stringTemplate} ${numberTotal} people`;
 };
 
+app.post("/api/persons", (request, response) => {
+  const newPerson = {};
+  const name = request.body.name;
+  const number = request.body.number;
+  if (name === undefined || number === undefined) {
+    response.status(400).send({ error: "no name or number" });
+  }
+  newPerson.id = Math.round(Math.random() * 100000);
+  newPerson.name = name;
+  newPerson.number = number;
+  persons.push(newPerson);
+  response.json(newPerson);
+});
+
 app.delete("/api/persons/:id", (request, response) => {
   const id = Number(request.params.id);
   const elementWithId = persons.find((person) => person.id === id);
@@ -46,7 +61,7 @@ app.get("/api/persons/:id", (request, response) => {
   if (persons[id] === undefined) {
     response.status(404).send("Bad id");
   }
-  response.send(JSON.stringify(persons[id]));
+  response.json(persons[id]);
 });
 
 app.get("/api/info", (request, response) => {
