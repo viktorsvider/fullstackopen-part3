@@ -4,7 +4,11 @@ const morgan = require("morgan");
 const app = express();
 
 app.use(express.json());
-app.use(morgan("tiny"));
+app.use(
+  morgan(
+    ":method :url :status :res[content-length] - :response-time :post-body"
+  )
+);
 
 let persons = [
   {
@@ -34,6 +38,13 @@ const buildString = (numberTotal, stringTemplate) => {
     ? `${stringTemplate} 1 person`
     : `${stringTemplate} ${numberTotal} people`;
 };
+
+morgan.token("post-body", function (req, res) {
+  if (req.method === "POST") {
+    return JSON.stringify(req.body);
+  }
+  return "";
+});
 
 app.post("/api/persons", (request, response) => {
   const newPerson = {};
