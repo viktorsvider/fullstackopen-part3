@@ -3,16 +3,16 @@
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "not3s-back3nd"
+app = "phoneb00k"
 primary_region = "ams"
 
 [build]
 
 [env]
-  PORT = "3001"
+  PORT = "3000"
 
 [http_service]
-  internal_port = 3001
+  internal_port = 3000
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true

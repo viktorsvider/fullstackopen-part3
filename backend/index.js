@@ -4,6 +4,7 @@ const cors = require("cors");
 
 const app = express();
 
+app.use(express.static('dist'))
 app.use(express.json());
 app.use(
   morgan(
@@ -98,7 +99,7 @@ app.get("/api/persons", (request, response) => {
   response.json(persons);
 });
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Running on PORT ${PORT}`);
 });
